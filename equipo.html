@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tijuana Tours</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, #e6f0ff, #ffffff);
+      color: #003366;
+      scroll-behavior: smooth;
+    }
+    .navbar-brand img {
+      height: 60px;
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 600;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #007bff;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .welcome-section h2 {
+      font-weight: 900;
+      color: #003366;
+      animation: fadeInDown 1s ease forwards;
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .footer {
+      background-color: #001f3f;
+      color: white;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #a3c0ff;
+      text-decoration: underline;
+    }
+    .team-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 51, 102, 0.1);
+  }
+
+  .team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 51, 102, 0.2);
+  }
+
+  .social-icon {
+    font-size: 1.4rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .social-icon:hover {
+    transform: scale(1.2);
+    color: #0056b3 !important;
+  }
+
+  .team-img {
+    transition: transform 0.4s ease;
+  }
+
+  .team-card:hover .team-img {
+    transform: rotate(1deg) scale(1.05);
+  }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="sticky-top bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg container">
+    <a class="navbar-brand" href="#">
+      <img src="https://i.ibb.co/7NXC4XBj/Chat-GPT-Image-26-may-2025-07-27-34-p-m.png" alt="Tijuana Tours Logo" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+      <ul class="navbar-nav gap-3">
+        <li class="nav-item"><a class="nav-link" href="indextj.html">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipo.html">Equipo</a></li>
+        <li class="nav-item"><a class="nav-link" href="testimonios.html">Testimonios</a></li>
+        <li class="nav-item"><a class="nav-link" href="tours.html">Tours</a></li>
+        <li class="nav-item"><a class="nav-link" href="contactotj.html">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- Bienvenida -->
+<section id="inicio" class="welcome-section text-center py-5 bg-light">
+  <div class="container">
+    <h2 class="display-4">¡Bienvenido a Tijuana Tours!</h2>
+    <p class="lead">Explora y disfruta de los mejores tours que Tijuana tiene para ofrecer. Sumérgete en la cultura, historia y diversión de esta maravillosa ciudad.</p>
+  </div>
+</section>
+
+<!-- Contenido principal (se puede ir llenando con secciones dinámicas) -->
+<main class="container my-5">
+  <div class="bg-white rounded-4 p-4 shadow-sm text-center">
+    <!-- Agrega aquí tus secciones como "Equipo", "Testimonios", "Tours" -->
+    <!-- Sección Equipo -->
+<section id="equipo" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-4" data-aos="fade-up">Hola, ¿qué tal?</h2>
+    <p class="text-center mb-5 text-muted fs-5" data-aos="fade-up" data-aos-delay="100">
+      Conoce al equipo apasionado y comprometido que hace posible <strong>Tijuana Tours</strong>. Cada uno aporta su talento para brindarte experiencias inolvidables, auténticas y seguras.
+    </p>
+    <div class="row g-4 justify-content-center">
+
+      <!-- Paty García -->
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="card border-0 h-100 text-center p-4 rounded-4 team-card" style="background: linear-gradient(145deg, #dceeff, #f4faff);">
+          <img src="https://via.placeholder.com/150" class="rounded-circle border border-3 border-primary mx-auto mb-3 team-img" width="120" height="120" alt="Paty García">
+          <h5 class="fw-bold mb-1 text-primary">Paty García</h5>
+          <p class="text-muted mb-2"><i class="bi bi-award-fill text-warning"></i> CEO & Fundadora</p>
+          <p class="text-secondary">Creadora de este sueño turístico. Dirige la empresa con visión, pasión y un toque de magia tijuanense.</p>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="#" class="text-primary social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-success social-icon"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fátima Ruiz -->
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="card border-0 h-100 text-center p-4 rounded-4 team-card" style="background: linear-gradient(145deg, #cde7ff, #eef7ff);">
+          <img src="https://via.placeholder.com/150" class="rounded-circle border border-3 border-info mx-auto mb-3 team-img" width="120" height="120" alt="Fátima Ruiz">
+          <h5 class="fw-bold mb-1 text-info">Fátima Ruiz</h5>
+          <p class="text-muted mb-2"><i class="bi bi-geo-alt-fill text-danger"></i> Guía e Ingeniera</p>
+          <p class="text-secondary">Tecnología y turismo en una sola mente. Te muestra Tijuana con inteligencia, calidez y seguridad.</p>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="#" class="text-primary social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-success social-icon"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charly -->
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="card border-0 h-100 text-center p-4 rounded-4 team-card" style="background: linear-gradient(145deg, #e2f5ff, #f6fcff);">
+          <img src="https://via.placeholder.com/150" class="rounded-circle border border-3 border-success mx-auto mb-3 team-img" width="120" height="120" alt="Charly">
+          <h5 class="fw-bold mb-1 text-success">Charly</h5>
+          <p class="text-muted mb-2"><i class="bi bi-truck-front-fill text-success"></i> Operador Logístico</p>
+          <p class="text-secondary">Operador multifacético. Conduce, coordina y soluciona, todo con una sonrisa y puntualidad de reloj suizo.</p>
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="#" class="text-primary social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-success social-icon"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer pt-5 pb-3">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <h5 class="text-info">Contacto</h5>
+        <p><i class="bi bi-envelope-fill"></i> info@tijuanatours.com</p>
+        <p><i class="bi bi-telephone-fill"></i> +52 664 123 4567</p>
+        <p><i class="bi bi-geo-alt-fill"></i> Av. Revolución 1234, Tijuana, B.C.</p>
+      </div>
+      <div class="col-md-4">
+        <h5 class="text-info">Newsletter</h5>
+        <form class="d-flex" onsubmit="event.preventDefault(); alert('Gracias por suscribirte!');">
+          <input type="email" class="form-control rounded-start-pill" placeholder="Tu correo" required />
+          <button type="submit" class="btn btn-primary rounded-end-pill ms-2">Suscribir</button>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <h5 class="text-info">Síguenos</h5>
+        <div class="d-flex gap-3 fs-4">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4" style="font-size: 0.9rem;">© 2025 Tijuana Tours - Todos los derechos reservados</div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+</body>
+</html>
