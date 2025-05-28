@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación de Compra</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #e6f0ff, #ffffff);
+      color: #003366;
+      scroll-behavior: smooth;
+    }
+    .navbar-brand img {
+      height: 60px;
+    }
+    .nav-link {
+      font-weight: 600;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #007bff;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .tour-card img {
+      transition: transform 0.3s ease;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+    }
+    .tour-card:hover img {
+      transform: scale(1.05);
+    }
+    .footer {
+      background-color: #001f3f;
+      color: white;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #a3c0ff;
+      text-decoration: underline;
+    }
+    .payment-methods {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky-top bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg container">
+      <a class="navbar-brand" href="#">
+        <img src="https://i.ibb.co/7NXC4XBj/Chat-GPT-Image-26-may-2025-07-27-34-p-m.png" alt="Tijuana Tours Logo" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link" href="indextj.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="equipo.html">Equipo</a></li>
+          <li class="nav-item"><a class="nav-link" href="testimonios.html">Testimonios</a></li>
+          <li class="nav-item"><a class="nav-link" href="tours.html">Tours</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactotj.html">Contacto</a></li>
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+              <i class="bi bi-cart4 fs-5"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <div class="card card-form p-4">
+      <h2 class="mb-4 text-primary"><i class="bi bi-person-lines-fill"></i> Confirmación de Reservación</h2>
+
+      <form id="form-reservacion" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="nombreEncargado" class="form-label">Nombre del encargado de la reservación</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+            <input type="text" class="form-control" id="nombreEncargado" placeholder="Ej. Juan Pérez" required>
+            <div class="invalid-feedback">
+              Por favor, ingresa el nombre del encargado.
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="acompanantes" class="form-label">Nombre de los acompañantes</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+            <textarea class="form-control" id="acompanantes" rows="2" placeholder="Ej. Ana, Luis, María"></textarea>
+          </div>
+        </div>
+        <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="correo" class="form-label">Correo electrónico</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+          <input type="email" class="form-control" id="correo" placeholder="Ej. ejemplo@correo.com" required>
+          <div class="invalid-feedback">
+            Por favor, ingresa un correo electrónico válido.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+          <input type="tel" class="form-control" id="telefono" placeholder="Ej. 6641234567" pattern="[0-9]{10}" required>
+          <div class="invalid-feedback">
+            Por favor, ingresa un número de teléfono válido de 10 dígitos.
+          </div>
+        </div>
+      </div>
+    </div>
+
+<p><p>
+        <div class="alert alert-warning" role="alert">
+          <strong>⚠️ Por favor valida que tu reservación sea correcta antes de continuar.</strong>
+        </div>
+
+        <h5 class="text-secondary">Resumen del Tour</h5>
+        <table class="table table-bordered" id="resumen-tour">
+          <thead class="table-light">
+            <tr class="bg-info">
+              <th>Tour</th>
+              <th>Fecha</th>
+              <th>Lugares</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="d-flex justify-content-between mb-4">
+          <button type="button" class="btn btn-outline-secondary" onclick="modificarReservacion()">Modificar Reservación</button>
+          <button type="submit" class="btn btn-success" id="btnConfirmar">Confirmar Reservación</button>
+        </div>
+      </form>
+
+      <div class="payment-methods mt-4">
+        <h5 class="text-secondary mb-3">Selecciona tu método de pago</h5>
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-credit-card fs-1 text-primary"></i>
+                <h6 class="card-title mt-2">Pago en línea</h6>
+                <input class="form-check-input mt-2" type="radio" name="metodoPago" id="pagoLinea" checked>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-bank fs-1 text-success"></i>
+                <h6 class="card-title mt-2">Transferencia</h6>
+                <input class="form-check-input mt-2" type="radio" name="metodoPago" id="pagoTransferencia">
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-paypal fs-1 text-info"></i>
+                <h6 class="card-title mt-2">PayPal</h6>
+                <input class="form-check-input mt-2" type="radio" name="metodoPago" id="pagoPaypal">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="footer pt-5 pb-3">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-4">
+          <h5 class="text-info">Contacto</h5>
+          <p><i class="bi bi-envelope-fill"></i> info@tijuanatours.com</p>
+          <p><i class="bi bi-telephone-fill"></i> +52 664 123 4567</p>
+          <p><i class="bi bi-geo-alt-fill"></i> Av. Revolución 1234, Tijuana, B.C.</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-info">Newsletter</h5>
+          <form class="d-flex" onsubmit="event.preventDefault(); alert('Gracias por suscribirte!');">
+            <input type="email" class="form-control rounded-start-pill" placeholder="Tu correo" required />
+            <button type="submit" class="btn btn-primary rounded-end-pill ms-2">Suscribir</button>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-info">Síguenos</h5>
+          <div class="d-flex gap-3 fs-4">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4" style="font-size: 0.9rem;">© 2025 Tijuana Tours - Todos los derechos reservados</div>
+    </div>
+  </footer>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const carritoData = localStorage.getItem("carrito");
+
+    if (!carritoData) {
+      alert("No hay datos en el carrito.");
+      return;
+    }
+
+    const { tourName, date, places, precio } = JSON.parse(carritoData);
+    const total = precio * places;
+
+    const tbody = document.querySelector("#resumen-tour tbody");
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${tourName}</td>
+      <td>${date}</td>
+      <td>${places}</td>
+      <td>$${total} MXN</td>
+    `;
+
+    tbody.appendChild(row);
+  });
+</script>
+
+</body>
+</html>
