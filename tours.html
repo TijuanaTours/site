@@ -126,22 +126,36 @@
 
 <!-- Modal Carrito -->
 <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cartModalLabel">Carrito de Reservas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="cartModalLabel"><i class="bi bi-cart-check-fill me-2"></i>Resumen de tu Reservación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body" id="cart-body">
-        <p class="text-muted">Tu carrito está vacío.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <a href="pago.html" class="btn btn-success" onclick="guardarCarrito()">Generar Compra</a>
+      <div class="modal-body">
+        <table class="table table-hover align-middle text-center">
+          <thead class="table-light">
+            <tr>
+              <th><i class="bi bi-card-text"></i> Tour</th>
+              <th><i class="bi bi-calendar3"></i> Fecha</th>
+              <th><i class="bi bi-person-fill"></i> Lugares</th>
+              <th><i class="bi bi-cash-coin"></i> Total</th>
+              <th><i class="bi bi-trash-fill text-danger"></i> Acción</th>
+            </tr>
+          </thead>
+          <tbody id="cart-body">
+            <tr><td id="empty-cart-msg" colspan="4" class="text-muted">Aún no has reservado ningún tour.</td></tr>
+          </tbody>
+        </table>
+        <div class="text-end mt-4" id="checkout-section" style="display: block;">
+          <button class="btn btn-success btn-lg" onclick="finalizarCompra()">Finalizar compra <i class="bi bi-credit-card"></i></button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <!-- Footer -->
 <footer class="footer pt-5 pb-3">
@@ -225,56 +239,6 @@
     });
 </script>
 <script>
-  AOS.init();
-
-  function addToCart(tourName, precio) {
-  const date = document.getElementById("booking-date").value;
-  const placesInput = document.getElementById("booking-places");
-  const places = parseInt(placesInput.value);
-  const max = parseInt(placesInput.max);
-
-  if (!date) {
-    alert("Selecciona una fecha válida.");
-    return;
-  }
-
-  if (!places || places < 1 || places > max) {
-    alert(`Ingresa un número válido de lugares (1 a ${max}).`);
-    return;
-  }
-
-  const total = precio * places;
-  const resumen = {
-    tourName,
-    date,
-    places,
-    precio
-  };
-
-  // Guardar en localStorage
-  localStorage.setItem("carrito", JSON.stringify(resumen));
-
-  // Mostrar en el modal
-  document.getElementById("cart-body").innerHTML = `
-    <p>${tourName}<br>Fecha: ${date}<br>Lugares: ${places}<br>Total: $${total} MXN</p>`;
-  document.getElementById("cart-count").textContent = places;
-
-  // Cerrar modal de reserva
-  const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-  bookingModal.hide();
-}
-function guardarCarrito() {
-  // Aquí puedes limpiar datos anteriores o validar que hay algo en el carrito
-  const carrito = localStorage.getItem("carrito");
-  if (!carrito) {
-    alert("El carrito está vacío.");
-    return false; // Evita la navegación si no hay datos
-  }
-
-  // También puedes dejarlo vacío si ya guardaste todo antes
-}
-</script>
-<script>
   function validarLugares(input, max) {
     const valor = parseInt(input.value);
     if (valor > max) {
@@ -331,6 +295,8 @@ function guardarCarrito() {
     }
   });
 
+  const cartItems = [];
+
   function addToCart(tourName, precio) {
     const date = document.getElementById("booking-date").textContent.trim();
     const placesInput = document.getElementById("booking-places");
@@ -348,13 +314,90 @@ function guardarCarrito() {
     }
 
     const total = precio * places;
-    const summary = `${tourName}<br>Fecha: ${date}<br>Lugares: ${places}<br>Total: $${total} MXN`;
-    document.getElementById("cart-body").innerHTML = `<p>${summary}</p>`;
-    document.getElementById("cart-count").textContent = places;
 
-    const bookingModal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-    bookingModal.hide();
+    const newItem = {
+      tour: tourName,
+      fecha: date,
+      lugares: places,
+      total: total
+    };
+
+    // Guardar en arreglo
+    cartItems.push(newItem);
+
+    // Actualizar tabla del modal carrito
+    const tbody = document.getElementById("cart-body");
+
+    tbody.innerHTML = cartItems.map((item, index) => `
+      <tr>
+        <td>${item.tour}</td>
+        <td>${item.fecha}</td>
+        <td>${item.lugares}</td>
+        <td>$${item.total} MXN</td>
+        <td>
+          <button class="btn btn-outline-danger btn-sm" onclick="removeFromCart(${index})" title="Eliminar">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    `).join("");
+
+
+    // Actualizar contador
+    const totalLugares = cartItems.reduce((sum, item) => sum + item.lugares, 0);
+    document.getElementById("cart-count").textContent = totalLugares;
+
+    // Cerrar modal reserva
+    bootstrap.Modal.getInstance(document.getElementById('bookingModal')).hide();
+
+    // Mostrar modal carrito automáticamente
+    const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+    cartModal.show();
+    document.getElementById("cart-count").textContent = cartItems.length;
+    document.getElementById("empty-cart-msg").style.display = "none";
+    document.getElementById("checkout-section").style.display = "block"; // 👈 Esto es lo que faltaba
   }
+
+
+  function renderCart() {
+  const tbody = document.getElementById("cart-body");
+  const emptyMsg = document.getElementById("empty-cart-msg");
+
+  if (cartItems.length === 0) {
+    tbody.innerHTML = '';
+    emptyMsg.style.display = 'block';
+    return;
+  }
+
+  emptyMsg.style.display = 'none';
+  tbody.innerHTML = cartItems.map((item, index) => `
+    <tr>
+      <td>${item.tour}</td>
+      <td>${item.fecha}</td>
+      <td>${item.lugares}</td>
+      <td>$${item.total} MXN</td>
+      <td>
+        <button class="btn btn-outline-danger btn-sm" onclick="removeFromCart(${index})" title="Eliminar">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    <button>Eliminar</button>
+  `).join("");
+}
+
+  function removeFromCart(index) {
+    cartItems.splice(index, 1);
+    renderCart(); // O simplemente vuelve a ejecutar este bloque si no estás usando renderCart()
+  }
+  function finalizarCompra() {
+    // Guardar el carrito en localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    // Redirigir a pago.html
+    window.location.href = 'pago.html';
+  }
+
 </script>
 </body>
 </html>
