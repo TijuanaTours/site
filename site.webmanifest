@@ -1,18 +1,18 @@
 {
   "name": "Tijuana Tours",
-  "short_name": "TijuanaTours",
-  "start_url": "/",
+  "short_name": "Tours",
+  "start_url": "/site/",
   "display": "standalone",
-  "background_color": "#0a2a43",
-  "theme_color": "#0a2a43",
+  "background_color": "#ffffff",
+  "theme_color": "#0d6efd",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "https://tijuanatours.github.io/site/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icon-512.png",
+      "src": "https://tijuanatours.github.io/site/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
