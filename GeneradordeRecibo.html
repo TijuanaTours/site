@@ -85,7 +85,7 @@
         <div class="col-md-6">
           <label class="fw-bold">Tipo de Recibo</label>
           <select id="tipo" class="form-select" onchange="validarMonto()">
-            <option value="#">Selecciona una opción</option>
+            <option value="Tijuana Tours">Selecciona una opción</option>
             <option value="Liquidación">Liquidación</option>
             <option value="Abono">Abono</option>
           </select>
@@ -306,7 +306,7 @@ function enviarWS() {
     link.click();
 
     const texto = encodeURIComponent(
-      "Hola 👋, le enviamos su recibo.\nAdjunte la imagen descargada en este chat.\n\nGracias por su preferencia."
+      "Hola, le enviamos su recibo.\n\nGracias por su preferencia, cualquier duda estamos a su servicio.\n Que tenga un excelente dia."
     );
 
     window.open(`https://wa.me/52${numeroTel}?text=${texto}`, "_blank");
