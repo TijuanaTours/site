@@ -1,8 +1,10 @@
 {
   "name": "Tijuana Tours",
-  "short_name": "Recibo",
+  "short_name": "Recibos",
   "start_url": "/site/GeneradordeRecibo.html",
+  "scope": "/site/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#0d6efd",
   "icons": [
