@@ -10,26 +10,15 @@
 
 <link rel="icon" href="/icon-192.png" sizes="192x192">
 <link rel="manifest" href="/site.webmanifest">
-
-<!-- Para iPhone / iPad -->
 <link rel="apple-touch-icon" href="/icon-192.png">
-
 <link rel="shortcut icon" href="/icon-192.png?v=2">
-  
-  
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
 <style>
   body { background:#eef3f9; }
-
-  :root {
-    --azul-header: #0a2a43;
-    --azul-titulo: #0d5c7d;
-    --azul-borde: #0a2a43;
-    --azul-barra: #0c3a5d;
-  }
+  :root { --azul-header: #0a2a43; --azul-titulo: #0d5c7d; --azul-borde: #0a2a43; --azul-barra: #0c3a5d; }
 
   .ticket {
     width: 480px;
@@ -62,35 +51,13 @@
     overflow:hidden;
   }
 
-  .title {
-    font-size:32px;
-    text-align:right;
-    line-height:1.1;
-    color:#b8e7ff;
-    font-weight:700;
-  }
+  .title { font-size:32px; text-align:right; line-height:1.1; color:#b8e7ff; font-weight:700; }
 
-  .section {
-    border:1px solid var(--azul-borde);
-    padding:15px;
-    margin:0;
-  }
+  .section { border:1px solid var(--azul-borde); padding:15px; margin:0; }
+  .label { font-weight:600; color: var(--azul-borde); }
 
-  .label {
-    font-weight:600;
-    color: var(--azul-borde);
-  }
-
-  .barra-qr {
-    background: var(--azul-barra);
-    text-align:center;
-    padding: 12px 0;
-  }
-
-  #qr {
-    margin:auto;
-    width: 140px;
-  }
+  .barra-qr { background: var(--azul-barra); text-align:center; padding: 12px 0; }
+  #qr { margin:auto; width: 140px; }
 
   .footer {
     background: var(--azul-header);
@@ -99,7 +66,6 @@
     padding:15px;
     font-size:14px;
   }
-
   .footer small { display:block; }
 </style>
 </head>
@@ -111,7 +77,6 @@
     <i class="bi bi-file-earmark-text"></i> Generador de Recibos – Tijuana Tours
   </h2>
 
-  <!-- FORM -->
   <div class="card p-4 shadow-lg border-0" style="border-radius: 18px;">
     <form id="formRecibo">
 
@@ -119,7 +84,7 @@
         <div class="col-md-6">
           <label class="fw-bold">Tipo de Recibo</label>
           <select id="tipo" class="form-select" onchange="validarMonto()">
-              <option value="#">Selecciona una opción</option>
+            <option value="#">Selecciona una opción</option>
             <option value="Liquidación">Liquidación</option>
             <option value="Abono">Abono</option>
           </select>
@@ -142,20 +107,17 @@
       <label class="fw-bold">Tour / Servicio</label>
       <input id="servicio" class="form-control mb-3" placeholder="Ej. Renta de autobús" />
 
-      <!-- Campo monto dinámico -->
       <label class="fw-bold">Monto</label>
       <input id="monto" class="form-control mb-3" placeholder="$0.00" />
 
       <label class="fw-bold">Descripción del Servicio</label>
       <textarea id="descripcion" class="form-control mb-3" rows="4"></textarea>
 
-      <!-- BOTÓN IA -->
       <button type="button" class="btn btn-info mb-3 fw-bold" onclick="mejorarDescripcion()">
         <i class="bi bi-stars"></i> Mejorar descripción
       </button>
       <div id="progresoIA" class="text-primary fw-bold mb-3" style="display:none;">Mejorando descripción...</div>
 
-      <!-- Dropdown oculto para “generado por” -->
       <select id="generado" style="display:none">
         <option value="Paty García">Paty García</option>
         <option value="Fátima Ruiz" selected>Fátima Ruiz</option>
@@ -169,7 +131,6 @@
   </div>
 </div>
 
-<!-- MODAL PREVIEW -->
 <div class="modal fade" id="modalPreview">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content p-3">
@@ -199,6 +160,7 @@ document.getElementById("fecha").value = new Date().toLocaleDateString();
 const ciudadAuto = "Tijuana, Baja California Norte";
 const telAuto = "6647277107";
 
+// GENERAR RECIBO #
 function generarNum() {
   let f = new Date();
   let m = (f.getMonth()+1).toString().padStart(2,"0");
@@ -218,7 +180,7 @@ function validarMonto() {
   }
 }
 
-// IA LOCAL SIN API
+// IA local
 function mejorarDescripcion() {
   let t = descripcion.value.trim();
   if (!t) { alert("Escribe una descripción primero."); return; }
@@ -249,6 +211,7 @@ function generarPreview() {
     <div class="header">
       <div class="logo">
         <img src="https://i.ibb.co/B5dhX7Z1/499871133-1116059227215315-5067798107355192006-n.jpg"
+             crossOrigin="anonymous"
              style="width:100%; height:100%; object-fit:cover; border-radius:10px;" />
       </div>
       <div class="title">
@@ -292,7 +255,6 @@ function generarPreview() {
     </div>
   `;
 
-  // QR
   document.getElementById("qr").innerHTML = "";
   new QRCode(document.getElementById("qr"), {
     text: "https://tijuanatours.github.io/site/scan.html",
@@ -304,9 +266,13 @@ function generarPreview() {
 }
 
 
-// PNG
+// DESCARGAR PNG CON CORS PERMITIDO
 function guardarPNG() {
-  html2canvas(document.querySelector("#preview")).then(canvas => {
+  html2canvas(document.querySelector("#preview"), {
+    useCORS: true,
+    allowTaint: false,
+    scale: 2
+  }).then(canvas => {
     const link = document.createElement("a");
     link.download = `recibo_${numero.value}.png`;
     link.href = canvas.toDataURL();
@@ -314,37 +280,39 @@ function guardarPNG() {
   });
 }
 
-// WHATSAPP – SOLICITAR NÚMERO Y MANDAR MENSAJE + GENERAR PNG AUTOMÁTICO
-function enviarWS() {
-  // 1. Pedir número
-  let numero = prompt("¿A qué número deseas enviarlo por WhatsApp? (10 dígitos)");
 
-  if (!numero || numero.length !== 10) {
-    alert("Número inválido. Debe tener 10 dígitos.");
+// WHATSAPP + DESCARGA PNG
+function enviarWS() {
+  let numeroTel = prompt("¿A qué número deseas enviarlo por WhatsApp? (10 dígitos)");
+
+  if (!numeroTel || numeroTel.length !== 10) {
+    alert("Número inválido.");
     return;
   }
 
-  // 2. Generar la imagen automáticamente
-  html2canvas(document.querySelector("#preview")).then(canvas => {
-    // Crear archivo PNG en base64
-    const imagenBase64 = canvas.toDataURL("image/png");
+  html2canvas(document.querySelector("#preview"), {
+    useCORS: true,
+    allowTaint: false,
+    scale: 2
+  }).then(canvas => {
 
-    // 3. Descargar automáticamente la imagen
+    const img = canvas.toDataURL("image/png");
+
+    // descargar
     const link = document.createElement("a");
-    link.download = `recibo_${numero}.png`;
-    link.href = imagenBase64;
+    link.download = `recibo_${numero.value}.png`;
+    link.href = img;
     link.click();
 
-    // 4. Texto que va a acompañar al envío
     const texto = encodeURIComponent(
-      "Hola 👋, le enviamos su recibo.\n\n Cualquier duda estamos a su servicio, que tenga un excelente día!"
+      "Hola 👋, le enviamos su recibo.\nAdjunte la imagen descargada en este chat.\n\nGracias por su preferencia."
     );
 
-    // 5. Abrir WhatsApp con el número ingresado
-    window.open(`https://wa.me/52${numero}?text=${texto}`, "_blank");
+    window.open(`https://wa.me/52${numeroTel}?text=${texto}`, "_blank");
+
+    alert("Ahora adjunte la imagen descargada en el chat de WhatsApp.");
   });
 }
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
