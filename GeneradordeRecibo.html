@@ -98,7 +98,7 @@
 
         <div class="col-md-3">
           <label class="fw-bold">Fecha</label>
-          <input id="fecha" class="form-control" readonly />
+          <input id="fecha" class="form-control" />
         </div>
       </div>
 
@@ -174,7 +174,7 @@ function generarNum() {
 function validarMonto() {
   if (tipo.value === "Liquidación") {
     monto.value = "Liquidado";
-    monto.disabled = true;
+    monto.disabled = false;
   } else {
     monto.value = "";
     monto.disabled = false;
