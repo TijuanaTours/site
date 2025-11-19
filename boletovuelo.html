@@ -85,7 +85,6 @@
         box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
-    /* Estilos modal */
     .modal-body .receipt-container {
         margin: 0;
         box-shadow: none;
@@ -131,9 +130,11 @@
 
           <!-- LOGO + TÍTULO -->
           <div class="text-center mb-4">
-            <img src="https://i.ibb.co/B5dhX7Z1/499871133-1116059227215315-5067798107355192006-n.jpg" 
-                 alt="Logo Tijuana Tours" 
+            <img src="https://i.imgur.com/NbdcgFP.jpeg"
+                 alt="Logo Tijuana Tours"
+                 crossorigin="anonymous"
                  style="width: 110px; border-radius: 10px; margin-bottom: 10px;">
+
             <h1 class="title mt-3">✨ ¡Gracias por viajar con Tijuana Tours! ✈️</h1>
           </div>
 
@@ -178,12 +179,10 @@
             </table>
           </div>
 
-          <!-- LEYENDA PROFESIONAL -->
           <p class="text-muted" style="font-size: 14px; margin-top: 8px;">
             <strong>Aviso:</strong> En caso de cancelaciones, retrasos o inconvenientes relacionados directamente con la aerolínea,
             <strong>Tijuana Tours no se hace responsable</strong> debido a que dichos eventos son ajenos al control de la empresa.
           </p>
-
 
           <!-- HOSPEDAJE -->
           <h4 class="subtitle"><i class="bi bi-building"></i> Hospedaje</h4>
@@ -205,8 +204,7 @@
               </tbody>
             </table>
           </div>
-          
-          <!-- NOTA INE -->
+
           <p class="text-muted" style="font-size: 14px;">
             <strong>Nota:</strong> Al llegar deberá presentar su INE junto con este código de reservación.
           </p>
@@ -243,7 +241,6 @@ document.getElementById("formulario").addEventListener("submit", (e) => {
     const hotel = document.getElementById("hotel").value;
     const reserva = document.getElementById("reserva").value;
 
-    // Llenar la tabla del modal con los datos
     document.getElementById("tabla-cliente").innerHTML =
       `<tr><td>NOMBRE</td><td>${nombre}</td></tr>`;
 
@@ -253,7 +250,6 @@ document.getElementById("formulario").addEventListener("submit", (e) => {
     document.getElementById("hotel-txt").textContent = hotel;
     document.getElementById("codigo-reserva").textContent = reserva;
 
-    // Mostrar el modal
     const boletoModal = new bootstrap.Modal(document.getElementById("boletoModal"));
     boletoModal.show();
 });
@@ -261,7 +257,14 @@ document.getElementById("formulario").addEventListener("submit", (e) => {
 // Descargar boleto como imagen
 document.getElementById("descargarBoleto").addEventListener("click", () => {
     const boleto = document.querySelector("#boletoModal .receipt-container");
-    html2canvas(boleto, { useCORS: true, scale: 2 }).then(canvas => {
+
+    html2canvas(boleto, {
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: null,
+        scrollY: -window.scrollY,
+        scale: 2
+    }).then(canvas => {
         const link = document.createElement("a");
         link.download = `boleto_${Date.now()}.png`;
         link.href = canvas.toDataURL("image/png");
