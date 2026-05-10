@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Propuesta - Tijuana Tours</title>
+    <style>
+        /* ESTILOS DE LA INTERFAZ DEL EDITOR */
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .no-print-area {
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 800px;
+        }
+
+        button {
+            background-color: #0178bc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #015a8d;
+        }
+
+        /* ESTILOS DEL DOCUMENTO (FORMATO A4) */
+        #propuesta-container {
+            background-color: white;
+            width: 210mm; 
+            min-height: 297mm;
+            padding: 15mm 20mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            color: #2c3e50;
+            line-height: 1.4;
+            font-size: 11pt;
+            position: relative;
+        }
+
+        [contenteditable="true"]:hover {
+            background-color: #fff9c4;
+            outline: 1px dashed #fbc02d;
+        }
+
+        .header {
+            border-bottom: 3px solid #0178bc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo-placeholder {
+            height: 90px;
+            width: 120px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8pt;
+            color: #999;
+        }
+
+        .company-info {
+            text-align: right;
+        }
+
+        .company-info h1 {
+            margin: 0;
+            color: #0178bc;
+            font-size: 22pt;
+            text-transform: uppercase;
+        }
+
+        .date {
+            text-align: right;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        h2 {
+            color: #0178bc;
+            border-left: 5px solid #0178bc;
+            padding-left: 10px;
+            font-size: 13pt;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .section-box {
+            background-color: #f4f9fc;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border: 1px solid #e1edf5;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #d1d1d1;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0178bc;
+            color: white;
+            text-transform: uppercase;
+            font-size: 10pt;
+        }
+
+        .highlight {
+            color: #d93025;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-size: 10pt;
+        }
+
+        /* CONFIGURACIÓN DE IMPRESIÓN */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .no-print-area {
+                display: none;
+            }
+            #propuesta-container {
+                box-shadow: none;
+                width: 100%;
+                min-height: auto;
+                padding: 15mm 20mm;
+            }
+            [contenteditable="true"] {
+                outline: none !important;
+                background-color: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-print-area">
+        <h3>Editor de Propuestas</h3>
+        <p>Edita el texto haciendo clic sobre él. Para guardar, usa el botón de abajo y selecciona <b>"Guardar como PDF"</b>.</p>
+        <button onclick="window.print()">DESCARGAR PROPUESTA (PDF)</button>
+    </div>
+    
+
+    <div id="propuesta-container">
+        <div class="header">
+            <div class="logo-area">
+                <img src="https://lh3.googleusercontent.com/u/0/d/1JJGjAKqKRfC1zmfPXtpgUtb0Nxlzbb8O" 
+     alt="Logo" 
+     class="logo-img" 
+     style="height: 90px;" 
+     onerror="this.style.display='none'">
+                <p style="font-size: 8pt; color: #999;">Atención & Servicio</p>
+            </div>
+            
+            <div class="company-info">
+                <h1 contenteditable="true">TIJUANA TOURS</h1>
+                <p contenteditable="true">Cotización</p>
+                <p><strong>Tel:</strong> <span contenteditable="true">664 727 7107</span></p>
+            </div>
+        </div>
+
+        <div class="content">
+            <p class="date" contenteditable="true">Tijuana, B.C., a 9 de mayo de 2026</p>
+
+            <p><strong>Estimados <span contenteditable="true">CecyteBC</span>,</strong></p>
+            <p contenteditable="true">Es un gusto saludarlos. Por medio de la presente, adjuntamos la propuesta formal para su viaje al Valle de Guadalupe.</p>
+
+            <h2 contenteditable="true">Logística de Salida:</h2>
+            <div class="section-box">
+                <p style="margin:0;"><strong>Punto de reunión:</strong> <span contenteditable="true">Cecyte El Pacífico</span> | <strong>Salida:</strong> <span contenteditable="true">7:00 AM</span></p>
+            </div>
+
+            <h2 contenteditable="true">EL SERVICIO INCLUYE:</h2>
+            <div class="section-box">
+                <ul contenteditable="true">
+                    <li><strong>Transporte:</strong> Viaje redondo en unidad equipada.</li>
+                    <li><strong>Seguro de Viaje:</strong> Cobertura de viajero a bordo.</li>
+                    <li><strong>Coordinación:</strong> Anfitrión para atención y logística.</li>
+                    <li><strong>Alimentos:</strong> Comida tipo Buffet incluida.</li>
+                    <li><strong>Paseo en Barco:</strong> Recorrido por la Bahía de Ensenada.</li>
+                </ul>
+            </div>
+
+            <h2 contenteditable="true">ITINERARIO DE EXPERIENCIAS:</h2>
+            <div class="section-box">
+                <p style="margin: 0 0 5px 0; font-style: italic; font-size: 9.5pt;" contenteditable="true">*Cada visita tiene una duración estimada de 30 a 40 minutos.</p>
+                <ul contenteditable="true">
+                    <li><strong>Talleres de Artesanías y Gastronomía:</strong> Visita a casas productoras (<strong>Casa Belén, AK Vino, Delicias del Valle</strong>).</li>
+                    <li><strong>Recorrido por el Valle:</strong> Apreciación del paisaje regional.</li>
+                    <li><strong>Parada fotográfica:</strong> Visita al icónico letrero de la botella gigante en el Valle de Guadalupe.</li>
+                    <li><strong>Mermeladas de Lupita:</strong> Repostería y dulces artesanales.</li>
+                </ul>
+            </div>
+
+            <h2 contenteditable="true">COTIZACIÓN DE GRUPO:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th contenteditable="true">Descripción</th>
+                        <th contenteditable="true">Costo por Persona</th>
+                        <th contenteditable="true">Cortesías</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true">Mínimo 100 personas</td>
+                        <td><strong contenteditable="true">$660.00 MXN</strong></td>
+                        <td contenteditable="true">3 lugares incluidos</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-box">
+                <p style="margin: 0 0 8px 0;"><strong>Nota:</strong> <span contenteditable="true">para respetar el costo y cortesías deben ser minimo 100 personas. y en los costos proporcionados no incluye facturación.</span></p>
+                <p style="margin: 0;" contenteditable="true">Para garantizar los costos y la disponibilidad de las unidades aquí mencionados, la reserva deberá formalizarse a más tardar el <span class="highlight">15 de Mayo</span> (Reserva de Apartado con dinero) y el pago total debe estar cubierto 3 dias antes de la salida. A partir de la fecha de esta cotización, se otorgan 7 días hábiles para realizar el apartado.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p contenteditable="true">Atentamente,<br><strong>Tijuana Tours - Atención & Servicio</strong></p>
+        </div>
+    </div>
+
+</body>
+</html>
